@@ -61,7 +61,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
         </div>
 
         <div className="space-y-4">
-          {/* Opción $7.99 */}
+          {/* Opción $7.99 - Premium */}
           <a
             href="https://tu-link-de-pago-7.99.com"
             target="_blank"
@@ -70,7 +70,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
           >
             <div className="flex items-center justify-between">
               <div className="text-left">
-                <span className="block text-lg">Edición Estándar</span>
+                <span className="block text-lg">Edición Premium</span>
                 <span className="text-sm text-gray-300">
                   Acceso completo al manual
                 </span>
@@ -98,7 +98,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
               </div>
               <div>
                 <span className="text-sm line-through text-red-300">
-                  $77.99
+                  $7.99
                 </span>
                 <span className="block text-2xl font-bold">$4.99</span>
               </div>

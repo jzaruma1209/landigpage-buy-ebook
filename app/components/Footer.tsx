@@ -22,7 +22,10 @@ export default function Footer() {
             </a>
           </div>
           <div className="border-t border-gray-800 pt-8">
-            <p className="text-sm">© 2026 Todos los derechos reservados.</p>
+            <p className="text-sm">
+              © 2026 Todos los derechos reservados. En colaboración con{" "}
+              <span className="text-white font-semibold">ProGamer</span>
+            </p>
           </div>
         </div>
       </div>

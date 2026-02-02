@@ -1,4 +1,19 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+
+interface UserPhoto {
+  picture: {
+    large: string;
+    medium: string;
+    thumbnail: string;
+  };
+}
+
 export default function TestimonialsSection() {
+  const [userPhotos, setUserPhotos] = useState<string[]>([]);
+
   const testimonials = [
     {
       name: "Carlos M.",
@@ -16,6 +31,26 @@ export default function TestimonialsSection() {
       rating: 5,
     },
   ];
+
+  // Consumir API de randomuser.me para obtener fotos de hombres
+  useEffect(() => {
+    const fetchUserPhotos = async () => {
+      try {
+        const response = await fetch(
+          "https://randomuser.me/api/?results=3&gender=male&nat=es"
+        );
+        const data = await response.json();
+        const photos = data.results.map(
+          (user: UserPhoto) => user.picture.large
+        );
+        setUserPhotos(photos);
+      } catch (error) {
+        console.error("Error fetching user photos:", error);
+      }
+    };
+
+    fetchUserPhotos();
+  }, []);
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
@@ -55,9 +90,20 @@ export default function TestimonialsSection() {
                 &ldquo;{testimonial.text}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center font-bold">
-                  {testimonial.name[0]}
-                </div>
+                {userPhotos[index] ? (
+                  <Image
+                    src={userPhotos[index]}
+                    alt={testimonial.name}
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center font-bold">
+                    {testimonial.name[0]}
+                  </div>
+                )}
                 <span className="font-semibold">{testimonial.name}</span>
               </div>
             </div>

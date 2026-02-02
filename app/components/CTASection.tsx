@@ -26,7 +26,7 @@ export default function CTASection() {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
               <div className="text-center">
                 <span className="text-gray-300 line-through text-2xl">
-                  $77.99
+                  $7.99
                 </span>
                 <span className="block text-5xl font-bold text-white">
                   $4.99

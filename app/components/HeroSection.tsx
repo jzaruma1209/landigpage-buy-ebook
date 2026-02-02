@@ -7,9 +7,9 @@ import Modal from "./Modal";
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Countdown timer - 2 hours from when user enters page
+  // Countdown timer - 5 hours from when user enters page, resets when reaches 0
   const [timeLeft, setTimeLeft] = useState({
-    hours: 2,
+    hours: 5,
     minutes: 0,
     seconds: 0,
   });
@@ -20,8 +20,8 @@ export default function HeroSection() {
         const totalSeconds =
           prev.hours * 3600 + prev.minutes * 60 + prev.seconds - 1;
         if (totalSeconds <= 0) {
-          clearInterval(timer);
-          return { hours: 0, minutes: 0, seconds: 0 };
+          // Reiniciar a 5 horas cuando llegue a 0
+          return { hours: 5, minutes: 0, seconds: 0 };
         }
         return {
           hours: Math.floor(totalSeconds / 3600),
@@ -178,6 +178,16 @@ export default function HeroSection() {
                     className="object-contain drop-shadow-2xl"
                     priority
                   />
+
+                  {/* Banner diagonal de oferta */}
+                  <div className="absolute top-3 -right-12 w-45 bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white text-center py-2 rotate-45 shadow-lg font-bold text-sm origin-center">
+                    <div className="flex flex-col items-center">
+                      <span className="text-xs">🔥 OFERTA</span>
+                      <span className="font-mono text-base">
+                        {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
