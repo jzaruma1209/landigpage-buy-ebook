@@ -48,17 +48,17 @@ export default function HeroSection() {
       </div>
 
       {/* Círculos decorativos */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-red-600/20 rounded-full blur-3xl" />
+      <div className="absolute top-40 md:top-20 left-10 w-72 h-72 bg-red-600/20 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-red-500/10 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 min-h-[80vh]">
+      <div className="container mx-auto px-4 pt-3 pb-6 md:pt-12 md:pb-20 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-12 min-h-[80vh]">
           {/* Contenido izquierdo */}
           <div className="flex-1 text-center lg:text-left">
             {/* Barra de oferta única con countdown integrado */}
-            <a
-              href="#"
-              className="inline-flex flex-wrap items-center justify-center gap-3 bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white px-5 py-3 rounded-full text-sm font-bold mb-6 shadow-xl shadow-red-500/30 hover:shadow-red-500/50 transition-all transform hover:scale-105 border border-red-400/30"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex flex-wrap items-center justify-center gap-3 bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white px-5 py-2 md:py-3 rounded-full text-sm font-bold mb-3 md:mb-6 shadow-xl shadow-red-500/30 hover:shadow-red-500/50 transition-all transform hover:scale-105 border border-red-400/30 cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 🔥 <span>Oferta por tiempo limitado</span>
@@ -69,9 +69,9 @@ export default function HeroSection() {
               <span className="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full font-extrabold">
                 Solo $4.99
               </span>
-            </a>
+            </button>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 md:mb-6">
               Enamora a la Mujer
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
                 Que Deseas
@@ -79,7 +79,7 @@ export default function HeroSection() {
               Hasta Hacerla Tuya
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl">
+            <p className="text-base md:text-xl text-gray-300 mb-4 md:mb-8 max-w-xl">
               Manual de{" "}
               <strong className="text-white">Ingeniería Social</strong> y{" "}
               <strong className="text-white">Psicología Conductual</strong> para
