@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Modal from "./Modal";
 
+const TIMER_DURATION = 5 * 60 * 60 * 1000; // 5 horas en milisegundos
+const STORAGE_KEY = "offer_start_time";
+
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Countdown timer - 5 hours from when user enters page, resets when reaches 0
+  // Countdown timer - persistente con localStorage
   const [timeLeft, setTimeLeft] = useState({
     hours: 5,
     minutes: 0,
@@ -15,21 +18,50 @@ export default function HeroSection() {
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        const totalSeconds =
-          prev.hours * 3600 + prev.minutes * 60 + prev.seconds - 1;
-        if (totalSeconds <= 0) {
-          // Reiniciar a 5 horas cuando llegue a 0
-          return { hours: 5, minutes: 0, seconds: 0 };
+    const getOrResetStartTime = () => {
+      let startTime = localStorage.getItem(STORAGE_KEY);
+
+      if (startTime) {
+        const start = parseInt(startTime, 10);
+        const elapsed = Date.now() - start;
+
+        // Si ya pasaron las 5 horas, reiniciar el temporizador
+        if (elapsed >= TIMER_DURATION) {
+          startTime = Date.now().toString();
+          localStorage.setItem(STORAGE_KEY, startTime);
         }
-        return {
-          hours: Math.floor(totalSeconds / 3600),
-          minutes: Math.floor((totalSeconds % 3600) / 60),
-          seconds: totalSeconds % 60,
-        };
-      });
+      } else {
+        // Primera visita: guardar la hora actual
+        startTime = Date.now().toString();
+        localStorage.setItem(STORAGE_KEY, startTime);
+      }
+
+      return startTime;
+    };
+
+    const calculateTimeLeft = () => {
+      const startTime = getOrResetStartTime();
+      const start = parseInt(startTime, 10);
+      const now = Date.now();
+      const elapsed = now - start;
+      const remaining = TIMER_DURATION - elapsed;
+
+      const totalSeconds = Math.max(0, Math.floor(remaining / 1000));
+      return {
+        hours: Math.floor(totalSeconds / 3600),
+        minutes: Math.floor((totalSeconds % 3600) / 60),
+        seconds: totalSeconds % 60,
+      };
+    };
+
+    // Calcular tiempo inicial
+    setTimeLeft(calculateTimeLeft());
+
+    // Actualizar cada segundo
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -64,7 +96,8 @@ export default function HeroSection() {
                 🔥 <span>Oferta por tiempo limitado</span>
               </span>
               <span className="bg-white/20 px-3 py-1 rounded-full font-mono text-base">
-                {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+                {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:
+                {formatTime(timeLeft.seconds)}
               </span>
               <span className="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full font-extrabold">
                 Solo $4.99
@@ -184,7 +217,9 @@ export default function HeroSection() {
                     <div className="flex flex-col items-center">
                       <span className="text-xs">🔥 OFERTA</span>
                       <span className="font-mono text-base">
-                        {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}
+                        {formatTime(timeLeft.hours)}:
+                        {formatTime(timeLeft.minutes)}:
+                        {formatTime(timeLeft.seconds)}
                       </span>
                     </div>
                   </div>
